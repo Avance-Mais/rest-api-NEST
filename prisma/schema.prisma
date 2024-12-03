@@ -1,0 +1,30 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id         Int      @id @default(autoincrement())
+  nome       String
+  email      String   @unique
+  senha      String
+  biografia  String?
+  editadoEm  DateTime @map("editado_em")
+  tipo       String  
+}
+
+model Post {
+  id         Int      @id @default(autoincrement())
+  idUsuario  Int      @map("id_usuario")
+  titulo     String
+  descricao  String
+  tema       String
+  link       String?
+}
+
