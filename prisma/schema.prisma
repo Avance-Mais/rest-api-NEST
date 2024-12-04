@@ -15,8 +15,8 @@ model Usuario {
   email      String   @unique
   senha      String
   biografia  String?
-  editadoEm  DateTime @map("editado_em")
-  tipo       String  
+  editadoEm  DateTime @default(now()) @map("editado_em") 
+  tipo       String            
 }
 
 model Post {
