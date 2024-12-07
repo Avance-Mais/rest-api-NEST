@@ -5,8 +5,38 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class PostService {
   constructor(private readonly prisma: PrismaService) {}
-  obterPosts() {
-    return this.prisma.post.findMany();
+  async obterPosts() {
+    const idUsuarios = await this.prisma.post.findMany({
+      select: {
+        idUsuario: true,
+      },
+    });
+
+    const ids = idUsuarios.map((item) => item.idUsuario);
+
+    const usuarios = await this.prisma.usuario.findMany({
+      where: {
+        id: { in: ids },
+      },
+      select: {
+        id: true,
+        nome: true,
+        email: true,
+        biografia: true,
+        tipo: true,
+      },
+    });
+
+    const posts = await this.prisma.post.findMany({
+      select: {
+        titulo: true,
+        descricao: true,
+        tema: true,
+        link: true,
+      },
+    });
+
+    return { usuarios, posts };
   }
 
   criarPost(data: PostDto) {
