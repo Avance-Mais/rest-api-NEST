@@ -9,27 +9,28 @@ export class UsuarioService {
 
   async autenticacao(data: ValidarDto) {
     let dadosValidacao = await this.prisma.usuario.findMany({
-      where : {
+      where: {
         email: data.email,
         senha: data.senha,
-      }
-    })
-    
-    if(dadosValidacao.length === 0){
+      },
+    });
+
+    if (dadosValidacao.length === 0) {
       return JSON.stringify({
-        status: 200,
-        mensagem: 'Usuário inexistente',
+        status: 404,
+        mensagem: 'E-mail ou senha inválidos',
         dados: null,
-        token: null
-      })
+      });
     } else {
       const tokenUnico = uuidv4();
       return JSON.stringify({
         status: 200,
-        mensagem: 'Usuário encontrado',
-        dados: dadosValidacao,
-        token: tokenUnico
-      })
+        mensagem: 'Autenticação bem-sucedida',
+        dados: {
+          token: tokenUnico,
+          usuario: dadosValidacao
+        },
+      });
     }
   }
 
