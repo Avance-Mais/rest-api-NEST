@@ -45,7 +45,194 @@ https://api-avance-plus.onrender.com
 
 Essa API possui os seguintes endpoints:
 
-- `GET /status`: Retorna status da API.
-- `POST /usuarios`: Adiciona um novo usuário.
-- `GET /posts`: Retorna todas as postagens.
-- `POST /posts`: Adiciona uma nova postagem.
+### **Status**
+
+- **`GET /status`**  
+  Retorna o status da API.
+
+**Exemplo de Resposta**:
+
+```json
+{
+  "status": "OK",
+  "code": 200,
+  "api": "RestApi Avance+",
+  "mensagem": "API funcionando corretamente!",
+  "versao": "1.0.0",
+  "ambiente": "Desenvolvimento"
+}
+```
+
+---
+
+### **Usuários**
+
+#### **`POST /usuarios`**
+
+Adiciona um novo usuário.
+
+**Requisição**:
+
+- **Body (JSON)**:
+  ```json
+  {
+    "nome": "Ricardo Barros",
+    "email": "ricardo@example.com",
+    "senha": "sua_senha123",
+    "tipo": "Aluno" // Ou "Professor"
+  }
+  ```
+
+**Exemplo de Resposta**:
+
+```json
+{
+  "id": 6,
+  "nome": "Ricardo Barros",
+  "email": "ricardo@example.com",
+  "senha": "sua_senha123",
+  "biografia": "",
+  "editadoEm": "2024-12-14T22:12:05.119Z",
+  "tipo": "Aluno"
+}
+```
+
+---
+
+#### **`POST /usuarios/auth`**
+
+Realiza a autenticação de um usuário.
+
+**Requisição**:
+
+- **Body (JSON)**:
+  ```json
+  {
+    "email": "usuario@example.com",
+    "senha": "sua_senha"
+  }
+  ```
+
+**Exemplo de Resposta (sucesso)**:
+
+```json
+{
+  "status": 200,
+  "mensagem": "Autenticação bem-sucedida",
+  "dados": {
+    "token": "...token...",
+    "usuario": {
+      {
+        "id": 6,
+        "nome": "Ricardo Barros",
+        "email": "ricardo@example.com",
+        "senha": "sua_senha123",
+        "biografia": "",
+        "editadoEm": "2024-12-14T22:12:05.119Z",
+        "tipo": "Aluno"
+      }
+    }
+  }
+}
+```
+
+**Exemplo de Resposta (erro)**:
+
+```json
+{
+  "status": 404,
+  "mensagem": "E-mail ou senha inválidos"
+}
+```
+
+---
+
+### **Postagens**
+
+#### **`GET /posts`**
+
+Retorna todas as postagens cadastradas.
+
+**Exemplo de Resposta**:
+
+```json
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "nome": "Paulo Ricardo",
+      "email": "paulo@example.com",
+      "biografia": "Desenvolvedor JS",
+      "tipo": "Aluno"
+    },
+    {
+      "id": 2,
+      "nome": "Karol",
+      "email": "karol@example.com",
+      "biografia": "Desenvolvedor JS",
+      "tipo": "Aluno"
+    },
+    {
+      "id": 3,
+      "nome": "Alan",
+      "email": "alan@example.com",
+      "biografia": "Desenvolvedor Vue.js",
+      "tipo": "Aluno"
+    },
+    ...
+  ],
+  "posts": [
+    {
+      "titulo": "Aprendendo inglês",
+      "descricao": "Um guia completo para iniciantes aprenderem inglês.",
+      "tema": "Inglês",
+      "link": "https://www.exemplo.com/curso-ingles"
+    },
+    {
+      "titulo": "Aprendendo inglês",
+      "descricao": "Um guia completo para iniciantes aprenderem inglês.",
+      "tema": "Inglês",
+      "link": "https://www.exemplo.com/curso-ingles"
+    },
+    {
+      "titulo": "Aprendendo Javascript",
+      "descricao": "Um guia completo para iniciantes aprenderem Javascript.",
+      "tema": "Programação",
+      "link": "https://www.exemplo.com/curso-programacao"
+    },
+    ...
+  ]
+}
+```
+
+---
+
+#### **`POST /posts`**
+
+Adiciona uma nova postagem.
+
+**Requisição**:
+
+- **Body (JSON)**:
+  ```json
+  {
+    "idUsuario": 5,
+    "titulo": "Aulão para ENEM 2025",
+    "descricao": "Aprenda o essencial para o ENEM de 2025 em uma hora!",
+    "tema": "ENEM",
+    "link": "https://www.exemplo.com/aulao-enem"
+  }
+  ```
+
+**Exemplo de Resposta**:
+
+```json
+{
+  "id": 5,
+  "idUsuario": 6,
+  "titulo": "Aulão para ETEC 2025",
+  "descricao": "Aprenda o essencial para o vestibular da ETEC de 2025 em uma hora!!!",
+  "tema": "ETEC",
+  "link": "https://www.exemplo.com/aulao-etec"
+}
+```
