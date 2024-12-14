@@ -5,3 +5,8 @@ export class UsuarioDto{
     biografia?: string
     tipo: string
 }
+
+export class ValidarDto {
+    email: string
+    senha: string
+}
