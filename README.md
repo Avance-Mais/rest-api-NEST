@@ -38,7 +38,7 @@ $ npm run start:prod
 ## URL Base
 
 ```bash
-https://api-avance-plus.onrender.com
+https://avance-mais-api.onrender.com
 ```
 
 ## Endpoints
